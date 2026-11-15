@@ -318,7 +318,7 @@ li {
 }
 
 .doom-primer {
-  font-size: 1rem;
+  font-size:clamp(2rem, 3vw + 1rem, 4rem);
   text-wrap: balance; /* wraps evenly instead of overflowing */
 
   font-family: 'comic',sans-serif;

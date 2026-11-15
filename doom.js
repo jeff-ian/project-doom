@@ -86,3 +86,13 @@ function handleLeave (category) {
   });
 }
 
+function loadVideo(el) {
+  const id = el.dataset.id;
+  const iframe = document.createElement('iframe');
+  iframe.src = `https://www.youtube.com/embed/${id}?autoplay=1&mute=1&playsinline=1&rel=0`;
+  iframe.allow = 'autoplay; encrypted-media; picture-in-picture';
+  iframe.allowFullscreen = true;
+  iframe.title = 'Video player';
+  el.innerHTML = '';
+  el.appendChild(iframe);
+}

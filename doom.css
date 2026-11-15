@@ -72,7 +72,10 @@ a:hover {
   display: flex;
   justify-content: space-between;
   height:3.5rem;
-  border:1px solid white;
+  border-left:none;
+  border-right:none;
+  border-top:none;
+  border-bottom:1px solid white;
   align-items: center;
   margin-bottom:10rem
 }
@@ -278,11 +281,10 @@ li {
 
 .video {
   position: relative;
-  width:90%;
+  width:100%;
   aspect-ratio:2/1;
   cursor: pointer;
   overflow: hidden;
-
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
   margin-bottom:1rem
 }
@@ -315,7 +317,7 @@ li {
 
 
 .primer {
-  padding:0 1rem;
+
   
   padding-bottom:1rem;
 }
@@ -349,7 +351,7 @@ li {
 }
 
 .page-header :nth-child(2) {
-  font-size: 1.2rem;
+  font-size: clamp(1rem, 0.927rem + 0.364vw, 1.2rem);
   font-weight:500
 }
 
@@ -446,6 +448,10 @@ footer {
 } 
   .microsite.portrait {
     font-size: 3cqw
+  }
+
+  .video {
+    aspect-ratio:3/4
   }
   
 }

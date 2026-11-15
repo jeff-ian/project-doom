@@ -14,9 +14,11 @@
 }
 
 :root {
-  --fluid-min: 2rem;
-  --fluid-max: 4rem;
-  --fluid-size: clamp(var(--fluid-min), 0.99rem + 4.32vw, var(--fluid-max));
+  --sub-min: 1rem;
+  --sub-max: 2rem;
+  --sub-heading: clamp(var(--sub-min), 2.5vw, var(--sub-max));
+  --text:0.9rem;
+  
 }
 
 body {
@@ -341,7 +343,7 @@ li {
   display: flex;
   flex-direction:column;
   align-items: center;
-  
+  margin-bottom: 2rem;
 }
 
 .page-header {
@@ -361,6 +363,7 @@ li {
 
 .page-descript {
   text-align: center;
+
 }
 
 .summary {
@@ -373,13 +376,16 @@ li {
 }
 
 .summary-text {
+  font-size: var(--text);
   max-width: 60ch;
   text-align: center;
+  padding:0 1rem
 }
 
 
 .doomsday-reason {
   font-family:'comic',sans-serif;
+  font-size:var(--sub-heading)
   
 }
 
@@ -395,7 +401,7 @@ li {
 .doom-reason-description {
   max-width:35rem;
   text-align: center;
-  
+  font-size: var(--text);
 }
 
 

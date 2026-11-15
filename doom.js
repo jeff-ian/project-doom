@@ -72,15 +72,15 @@ function handleEnter (category) {
   });
 }
 
-function handleLeave (category) {
-  category.addEventListener('mouseleave', () => {
-    const name = category.dataset.category;
-    const panel = document.querySelector(`[data-panel="${name}"]`);
-    panel.classList.remove('active')
-    console.log('left');
+// function handleLeave (category) {
+//   category.addEventListener('mouseleave', () => {
+//     const name = category.dataset.category;
+//     const panel = document.querySelector(`[data-panel="${name}"]`);
+//     panel.classList.remove('active')
+//     console.log('left');
     
-  });
-}
+//   });
+// }
 
 function loadVideo(el) {
   if (el.querySelector('iframe')) return;

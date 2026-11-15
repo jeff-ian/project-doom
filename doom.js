@@ -85,3 +85,5 @@ function handleLeave (category) {
     
   });
 }
+
+video.play()

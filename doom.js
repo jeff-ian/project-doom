@@ -43,11 +43,7 @@ function time () {
  })
 
 document.querySelectorAll('.video[data-id]').forEach(box => {
-  box.addEventListener('click', () => {
-    console.log('clicked');
-    const id = box.dataset.id;
-    box.innerHTML = `<iframe src="https://www.youtube.com/embed/${id}?autoplay=1" allow="autoplay; fullscreen" allowfullscreen></iframe>`;
-  });
+  box.addEventListener('click', () => loadVideo(box), { once: true });
 });
 
 closeButton.addEventListener('click', () => {
@@ -89,7 +85,6 @@ function handleLeave (category) {
 function loadVideo(el) {
   const isMobile = window.matchMedia('(max-width: 768px)').matches;
   const id = isMobile && el.dataset.idMobile ? el.dataset.idMobile : el.dataset.id;
-
   const iframe = document.createElement('iframe');
   iframe.src = `https://www.youtube.com/embed/${id}?autoplay=1&mute=1&playsinline=1&rel=0`;
   iframe.allow = 'autoplay; encrypted-media; picture-in-picture';

@@ -102,7 +102,7 @@ const videoObserver = new IntersectionObserver((entries, observer) => {
       observer.unobserve(entry.target);
     }
   });
-}, { threshold: 0.5 });
+}, { threshold: 0.2 });
 
 document.querySelectorAll('.video[data-id]').forEach(box => {
   videoObserver.observe(box);

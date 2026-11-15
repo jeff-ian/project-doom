@@ -83,13 +83,27 @@ function handleLeave (category) {
 }
 
 function loadVideo(el) {
+  if (el.querySelector('iframe')) return;
   const isMobile = window.matchMedia('(max-width: 768px)').matches;
   const id = isMobile && el.dataset.idMobile ? el.dataset.idMobile : el.dataset.id;
   const iframe = document.createElement('iframe');
-  iframe.src = `https://www.youtube.com/embed/${id}?autoplay=1&mute=1&playsinline=1&rel=0&controls=0&fs=0&disablekb=1&iv_load_policy=3`;
+  iframe.src = `https://www.youtube.com/embed/${id}?autoplay=1&mute=1&playsinline=1&rel=0`;
   iframe.allow = 'autoplay; encrypted-media; picture-in-picture';
   iframe.allowFullscreen = true;
   iframe.title = 'Video player';
   el.innerHTML = '';
   el.appendChild(iframe);
 }
+
+const videoObserver = new IntersectionObserver((entries, observer) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      loadVideo(entry.target);
+      observer.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.5 });
+
+document.querySelectorAll('.video[data-id]').forEach(box => {
+  videoObserver.observe(box);
+});

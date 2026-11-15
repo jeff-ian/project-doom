@@ -263,12 +263,11 @@ li {
   font-size: 1.1cqw;
 }
 
-.page {
-
+/* .page {
   padding:0 1rem;
   margin-bottom: 1rem;
   border:1px solid black
-}
+} */
 
 .page :first-child {
   font-family: 'comic',sans-serif;
@@ -323,7 +322,6 @@ li {
 
 .primer {
 
-  
   padding-bottom:1rem;
 }
 
@@ -381,7 +379,8 @@ li {
 
 
 .doomsday-reason {
-  font-family:'comic',sans-serif
+  font-family:'comic',sans-serif;
+  
 }
 
 .doom-reason-el {
@@ -394,7 +393,9 @@ li {
 }
 
 .doom-reason-description {
-  max-width:35rem
+  max-width:35rem;
+  text-align: center;
+  
 }
 
 
@@ -460,6 +461,7 @@ footer {
   position: relative;
   height: 80dvh;
   width:100%;
+
   overflow: hidden;
 }
 

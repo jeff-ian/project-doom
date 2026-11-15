@@ -452,8 +452,26 @@ footer {
   }
 
   .video {
-    height:80dvh
-  }
+  position: relative;
+  height: 80dvh;
+  overflow: hidden;
+}
+
+.video iframe {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  height: 100%;
+  width: calc(80dvh * 16 / 9);
+  transform: translate(-50%, -50%);
+  border: 0;
+}
+
+.video img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
   
 }
 

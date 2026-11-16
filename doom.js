@@ -125,11 +125,18 @@ const stage = document.querySelector('.viewport');
 const holdLength = 0.1;
 let currentPosition = 0;
 
+let stepVh = 100;              
+
+function updateStepVh() {         
+  stepVh = window.innerWidth <= 1115 ? 45 : 100;
+}
+updateStepVh();  
+
 
 function setSectionHeight() {
   const lastIndex = items.length - 1;
   const steps = lastIndex + holdLength;
-  section.style.height = `${(steps * 100) + 100}vh`;
+  section.style.height = `${(steps * stepVh) + 100}vh`;
 }
 
 setSectionHeight();
@@ -192,4 +199,8 @@ window.addEventListener('load', update);
 window.addEventListener('scroll', update);
 update();
 
-window.addEventListener('resize', update);
+window.addEventListener('resize', () => {
+  updateStepVh();
+  setSectionHeight();
+  update();
+});

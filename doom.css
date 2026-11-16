@@ -612,7 +612,9 @@ footer {
 
 .steve-header-img-container img {
   width:100%;
-  height:60%
+  aspect-ratio: 2/1
+
+
 }
 
 .viewport {

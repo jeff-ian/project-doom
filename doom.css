@@ -443,7 +443,7 @@ footer {
 .steve-hero {
   display: flex;
   width:100%;
-
+  margin-bottom:10rem
 }
 
 .steve-header-img-container {
@@ -638,7 +638,7 @@ footer {
 
 .scroll-section {
 
-  margin-top: -45vh;
+  margin-top: -60vh;
 }
   
 }

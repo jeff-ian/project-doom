@@ -214,21 +214,24 @@ window.addEventListener('resize', () => {
   const n = xmgItems.length;
   gallery.style.setProperty('--n', n);
 
-  // Hold: how long each image rests fully in place, measured in
-  // "transition lengths". 0 = no pause, 1 = rests as long as a transition takes.
-  const HOLD = 0.1;
+  const HOLD = 0.8;            // pause on each image (in transition lengths)
+  const MOBILE_MAX = 768;      // px; change to 1115 if you want it to match your other gallery
+  const STEP_VH_DESKTOP = 100; // scroll needed per step on desktop
+  const STEP_VH_MOBILE = 30;   // scroll needed per step on mobile (shorter)
 
-  // Total scroll distance, in viewport heights: (n-1) transitions + n holds
   const total = (n - 1) + n * HOLD;
-  gallery.style.height = `${(total + 1) * 100}dvh`;
-
   const clamp = (x, a, b) => Math.min(b, Math.max(a, x));
+
+  function setHeight() {
+    const stepVh = window.innerWidth <= MOBILE_MAX ? STEP_VH_MOBILE : STEP_VH_DESKTOP;
+    // scroll distance = total steps * step length, plus one screen for the pinned view
+    gallery.style.height = `${total * stepVh + 100}dvh`;
+  }
 
   function xmgUpdate() {
     const rect = gallery.getBoundingClientRect();
     const progress = clamp(-rect.top / (rect.height - window.innerHeight), 0, 1);
 
-    // Map scroll to a position p: stays flat during a hold, moves during a handoff
     const s = progress * total;
     const cycle = 1 + HOLD;
     const k = Math.min(Math.floor(s / cycle), n - 1);
@@ -250,6 +253,11 @@ window.addEventListener('resize', () => {
     requestAnimationFrame(() => { xmgUpdate(); ticking = false; });
   }, { passive: true });
 
-  window.addEventListener('resize', xmgUpdate);
+  window.addEventListener('resize', () => {
+    setHeight();
+    xmgUpdate();
+  });
+
+  setHeight();
   xmgUpdate();
 })();

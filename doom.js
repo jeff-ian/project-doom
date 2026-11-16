@@ -206,3 +206,50 @@ window.addEventListener('resize', () => {
 });
 
 
+(() => {
+  const gallery = document.querySelector('.x-men-gallery');
+  if (!gallery) return;
+
+  const xmgItems = [...gallery.querySelectorAll('.xmg-item')];
+  const n = xmgItems.length;
+  gallery.style.setProperty('--n', n);
+
+  // Hold: how long each image rests fully in place, measured in
+  // "transition lengths". 0 = no pause, 1 = rests as long as a transition takes.
+  const HOLD = 0.1;
+
+  // Total scroll distance, in viewport heights: (n-1) transitions + n holds
+  const total = (n - 1) + n * HOLD;
+  gallery.style.height = `${(total + 1) * 100}dvh`;
+
+  const clamp = (x, a, b) => Math.min(b, Math.max(a, x));
+
+  function xmgUpdate() {
+    const rect = gallery.getBoundingClientRect();
+    const progress = clamp(-rect.top / (rect.height - window.innerHeight), 0, 1);
+
+    // Map scroll to a position p: stays flat during a hold, moves during a handoff
+    const s = progress * total;
+    const cycle = 1 + HOLD;
+    const k = Math.min(Math.floor(s / cycle), n - 1);
+    const local = s - k * cycle;
+    const p = (k === n - 1 || local < HOLD) ? k : k + (local - HOLD);
+
+    gallery.style.setProperty('--p', p.toFixed(4));
+
+    xmgItems.forEach((el, i) => {
+      const v = clamp(1 - Math.abs(p - i), 0, 1);
+      el.style.setProperty('--v', v.toFixed(4));
+    });
+  }
+
+  let ticking = false;
+  window.addEventListener('scroll', () => {
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(() => { xmgUpdate(); ticking = false; });
+  }, { passive: true });
+
+  window.addEventListener('resize', xmgUpdate);
+  xmgUpdate();
+})();

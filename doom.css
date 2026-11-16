@@ -539,45 +539,62 @@ section {
 
 .x-men-gallery {
   --n: 3; /* JS overwrites this with the real image count */
-  height: calc(var(--n) * 100dvh);
   width: 100%;
   position: relative;
-  border: 1px solid red;
+
 }
 
-.x-men-gallery .stage {
+.x-men-gallery .xmg-stage {
   position: sticky;
   top: 0;
   height: 100dvh;
   overflow: hidden;
 }
 
-.x-men-gallery .item {
-  --v: 0;          /* set by JS, 0 to 1 */
-  --h: 40dvh;      /* image height */
+.x-men-gallery .xmg-item {
+  --v: 0;          /* set by JS per item, 0 to 1 */
   --slide: 60%;    /* slide distance */
   position: absolute;
   left: 0;
-  width: 100%;
-  height: var(--h);
-  top: calc((100dvh - 2 * var(--h)) / 2 + var(--step) * var(--h) * 0.5);
+  top: 50%;
+  width: 100%;     /* full width, natural height */
   z-index: calc(var(--step) + 1);
   opacity: var(--v);
-  transform: translateX(calc((1 - var(--v)) * var(--dir) * var(--slide)));
+  /* X: slide in from its side.
+     Y: each stair sits 50% of its own height below the previous one,
+        and --p (set by JS) shifts the whole staircase up so the
+        current image stays vertically centred. */
+  transform:
+    translate(
+      calc((1 - var(--v)) * var(--dir) * var(--slide)),
+      calc((var(--step) - var(--p)) * 50% - 50%)
+    );
   will-change: opacity, transform;
   pointer-events: none;
 }
 
-.x-men-gallery .item.left  { --dir: -1; }
-.x-men-gallery .item.right { --dir: 1; }
+.x-men-gallery .xmg-left  { --dir: -1; }
+.x-men-gallery .xmg-right { --dir: 1; }
 
-.x-men-gallery .item img {
+.x-men-gallery .xmg-item img {
   width: 100%;
-  height: 100%;
-  object-fit: cover;
+  height: auto;    /* no cropping, natural aspect ratio */
   display: block;
 }
 
+.x-men-gallery .xmg-caption {
+  position: absolute;      /* out of the flow, so the item height stays = image height */
+  top: 100%;               /* right below the image */
+  left: 0;
+  right: 0;
+  margin: 0 auto;          /* centres the block under the image */
+  width: max-content;
+  max-width: min(90%, 700px);
+  padding: 0.75rem 1rem;
+  text-align: center;
+  font-weight:500;
+  font-size:0.9rem
+}
 
 
 
@@ -714,7 +731,6 @@ section {
   min-width:100;
   width:100%;
   height:auto;
-  border:2px solid red;
   margin:none
 }
   

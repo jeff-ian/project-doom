@@ -541,7 +541,7 @@ section {
   --n: 3; /* JS overwrites this with the real image count */
   width: 100%;
   position: relative;
-
+  border:1px solid blue
 }
 
 .x-men-gallery .xmg-stage {
@@ -724,7 +724,11 @@ section {
 
 .scroll-section {
 
-  margin-top: -60vh;
+  margin-top: -50vh;
+}
+
+.x-men-hero {
+
 }
 
 .x-men-header-img-container  {
@@ -733,6 +737,14 @@ section {
   height:auto;
   margin:none
 }
+
+
+.x-men-gallery .xmg-item {
+    width: 140%;      /* bigger than the screen: the height grows with it */
+    left: -20%;       /* (100% - 150%) / 2, keeps it centred */
+  
+  }
+
   
 }
 

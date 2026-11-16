@@ -618,10 +618,10 @@ footer {
 }
 
 .viewport {
-    height: 100dvh;
+    height: 70dvh;
   }
 
-.steve-gallery-grid-1 { width:100%; }
+.steve-gallery-grid-1 { width:95%;aspect-ratio: 2/1; }
 .steve-gallery-grid-2 { width: 90%; }
 
 .doom-reason-el .text {

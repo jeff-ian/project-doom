@@ -487,6 +487,7 @@ footer {
 
 .scroll-section {
   height: 500vh;
+  margin-top: -15vh;
 }
 
 
@@ -625,7 +626,7 @@ footer {
 .cap-image-1 {
   width:120%;
   height:100%;
-  border:1px solid red
+
 }
 
 .steve-gallery-grid-2 { width: 100%; }
@@ -633,6 +634,11 @@ footer {
 .doom-reason-el .text {
   align-self: center
   
+}
+
+.scroll-section {
+
+  margin-top: -15vh;
 }
   
 }

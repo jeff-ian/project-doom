@@ -448,8 +448,6 @@ footer {
 
 .steve-header-img-container {
   min-width:70%;
-  width:70%;
-  border:1px solid red
 }
 
 .steve-hero .text {
@@ -484,8 +482,8 @@ footer {
   font-weight:500
 }
 
-.steve-gallery-grid-1 { width: 90%; }
-.steve-gallery-grid-2 { width: 35%; }
+.steve-gallery-grid-1 { width: 100%; }
+.steve-gallery-grid-2 { width: 40%; }
 
 .scroll-section {
   height: 500vh;
@@ -605,6 +603,10 @@ footer {
   flex-direction: column;
   align-items:center;
   gap:1rem
+}
+
+.steve-header-img-container {
+  width:100%;
 }
 
 .viewport {

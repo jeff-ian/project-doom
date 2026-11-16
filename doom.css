@@ -727,8 +727,6 @@ section {
   margin-top: -50vh;
 }
 
-
-
 .x-men-header-img-container  {
   min-width:100;
   width:100%;
@@ -745,7 +743,9 @@ section {
     left: -20%;       /* (100% - 150%) / 2, keeps it centred */
   
   }
-
-  
 }
 
+
+.fantastic-4 .sub-heading {
+  text-align: center;
+}

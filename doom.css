@@ -423,8 +423,7 @@ footer {
 }
 
 .doom-reason-el .text {
-  text-align:end;
-  align-self: flex-end;
+  align-self: end
   
 }
 
@@ -608,6 +607,11 @@ footer {
 
 .steve-gallery-grid-1 { width: 75%; }
 .steve-gallery-grid-2 { width: 60%; }
+
+.doom-reason-el .text {
+  align-self: center
+  
+}
   
 }
 

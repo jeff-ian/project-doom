@@ -442,14 +442,14 @@ footer {
 
 .steve-hero {
   display: flex;
-
   width:100%;
   height:28rem
 }
 
 .steve-header-img-container {
+  min-width:70%;
   width:70%;
-
+  border:1px solid red
 }
 
 .steve-hero .text {
@@ -599,6 +599,12 @@ footer {
   width: 100%;
   height: 100%;
   object-fit: contain;
+}
+
+.steve-hero {
+  flex-direction: column;
+  align-items:center;
+  gap:1rem
 }
 
 .viewport {

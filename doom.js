@@ -204,3 +204,5 @@ window.addEventListener('resize', () => {
   setSectionHeight();
   update();
 });
+
+

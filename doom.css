@@ -430,7 +430,9 @@ footer {
 .doomsday-reason {
   font-size: clamp(1.5rem, 1rem + 2.5vw, 2.5rem);
   font-family: 'comic',sans-serif;
-  line-height: 0.8;
+  line-height: 1;
+  text-align: center;
+
 }
 .steve {
   display: flex;
@@ -508,7 +510,74 @@ footer {
   height:auto;
 }
 
+section {
+  margin-bottom:2rem;
+}
 
+.x-men-hero {
+  display: flex;
+  width:100%;
+  margin-bottom:2rem;
+  flex-direction: column;
+}
+
+.x-men .sub-heading {
+  text-align: center ;
+}
+
+.x-men-header-img-container {
+  display: block;
+  width:95%;
+  height:auto;
+  border:1px solid red;
+  margin:0 auto;
+  margin:2rem
+}
+
+.x-men-hero .text {
+  padding:0 2rem
+}
+
+.x-men-gallery {
+  --n: 3; /* JS overwrites this with the real image count */
+  height: calc(var(--n) * 100dvh);
+  width: 100%;
+  position: relative;
+  border: 1px solid red;
+}
+
+.x-men-gallery .stage {
+  position: sticky;
+  top: 0;
+  height: 100dvh;
+  overflow: hidden;
+}
+
+.x-men-gallery .item {
+  --v: 0;          /* set by JS, 0 to 1 */
+  --h: 40dvh;      /* image height */
+  --slide: 60%;    /* slide distance */
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: var(--h);
+  top: calc((100dvh - 2 * var(--h)) / 2 + var(--step) * var(--h) * 0.5);
+  z-index: calc(var(--step) + 1);
+  opacity: var(--v);
+  transform: translateX(calc((1 - var(--v)) * var(--dir) * var(--slide)));
+  will-change: opacity, transform;
+  pointer-events: none;
+}
+
+.x-men-gallery .item.left  { --dir: -1; }
+.x-men-gallery .item.right { --dir: 1; }
+
+.x-men-gallery .item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
 
 
 

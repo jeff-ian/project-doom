@@ -605,8 +605,8 @@ footer {
     height: 100dvh;
   }
 
-.steve-gallery-grid-1 { width: 75%; }
-.steve-gallery-grid-2 { width: 60%; }
+.steve-gallery-grid-1 { width:90%; }
+.steve-gallery-grid-2 { width: 70%; }
 
 .doom-reason-el .text {
   align-self: center

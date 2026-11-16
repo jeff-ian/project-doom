@@ -128,7 +128,7 @@ let currentPosition = 0;
 let stepVh = 100;              
 
 function updateStepVh() {         
-  stepVh = window.innerWidth <= 1115 ? 60 : 100;
+  stepVh = window.innerWidth <= 1115 ? 50 : 100;
 }
 updateStepVh();  
 

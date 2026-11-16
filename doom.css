@@ -380,7 +380,6 @@ img {
 .text {
   font-size: var(--text);
   max-width: 60ch;
-  text-align: center;
   padding: 0 0.5rem;
 }
 
@@ -411,18 +410,22 @@ img {
 
 }
 
-
-.doom-reason-description {
-  max-width:35rem;
-  text-align: center;
-  padding:0 0.5rem
-}
-
-
-
 footer {
   min-height:10rem;
   background-color:#cf0000
+}
+
+.doom-reason-el {
+
+  display: flex;
+  flex-direction: column;
+
+}
+
+.doom-reason-el .text {
+  text-align:end;
+  align-self: flex-end;
+  
 }
 
 .doomsday-reason {
@@ -430,12 +433,6 @@ footer {
   font-family: 'comic',sans-serif;
   line-height: 0.8;
 }
-
-.doom-reason-el .text {
-
-  margin-left:20rem
-}
-
 .steve {
   display: flex;
   flex-direction: column;

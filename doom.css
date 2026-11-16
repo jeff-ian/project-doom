@@ -613,15 +613,20 @@ footer {
 .steve-header-img-container img { 
     width:100%;
     aspect-ratio: 5/3;
-    border:1px solid red 
+  
 }
 
 .viewport {
-    height: 100dvh;
+    height: 60dvh;
   }
 
 .steve-gallery-grid-1 { width: 100%; }
-.cap-image-1 {width:100%;height:100%;border:1px solid red}
+
+.cap-image-1 {
+  width:120%;
+  height:100%;
+  border:1px solid red
+}
 
 .steve-gallery-grid-2 { width: 100%; }
 

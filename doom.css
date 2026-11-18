@@ -853,12 +853,13 @@ section {
   margin-bottom:2rem
 }
 
-.steve-header-img-container {
-  width:100%;
 
-}
 
-.steve-header-img-container img { 
+.steve-header-img-container img ,
+.loki-tessaract-image-container img ,
+.tva-n-loki-image-container img ,
+.tva-image-contaner img,
+.sacred-timeline-image-container img{ 
     width:100%;
     aspect-ratio: 5/3;
   

@@ -7,6 +7,7 @@ const closeButton = document.querySelector('.close-button');
 const dropdown = document.querySelector('.dropdown');
 const categories = document.querySelectorAll('.category');
 
+
 const targetDate = new Date ('December 18, 2026 00:00:00').getTime();
 
 function time () {
@@ -288,3 +289,42 @@ window.addEventListener('resize', () => {
   setHeight();
   xmgUpdate();
 })();
+
+
+const primerButton = document.querySelector('.primer-btn');
+const playButton = document.querySelector('.play-btn');
+const theatersButton = document.querySelector('.theaters-btn');
+const creatorButton = document.querySelector('.creator-btn');
+
+const firstList = document.querySelector ('.list-1');
+const secondList = document.querySelector ('.list-2');
+const thirdList = document.querySelector ('.list-3');
+
+const lists = document.querySelectorAll ('.list');
+
+function listToggle () {
+  lists.forEach(list => {
+    if (list.classList.contains('visible')) {
+      list.classList.remove('visible');
+    }
+  });
+
+}
+
+
+
+primerButton.addEventListener ('click',() => {
+  listToggle();
+  firstList.classList.add('visible');
+})
+
+theatersButton.addEventListener ('click',() => {
+  listToggle();
+  secondList.classList.add('visible');
+})
+
+
+creatorButton.addEventListener ('click',() => {
+  listToggle();
+  thirdList.classList.add('visible');
+})

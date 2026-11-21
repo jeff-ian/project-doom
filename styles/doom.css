@@ -7,7 +7,7 @@
 
 @font-face {
   font-family: 'comic';
-  src: url('font/CaptainMarvel.woff2') format('woff2');
+  src: url('../font/CaptainMarvel.woff2') format('woff2');
   font-weight: normal;
   font-style: normal;
   font-display: swap;
@@ -31,7 +31,6 @@ body {
 }
 
 ::selection {
-
   color: #ED1D24;              /* The color of the text itself when highlighted */
 
 }
@@ -42,16 +41,25 @@ body {
   cursor: pointer;
 }
 
-a {
+a,.category {
   cursor: pointer;
   text-decoration: none;
   color:white;
   transition: color 0.15s ease-in;
 }
 
-a:hover {
-  color:#ED1D24
+.category.current {
+  color:#cf0000
 }
+
+a:hover,.category:hover {
+  color:#cf0000
+}
+
+.category:active{
+  color:#cf0000
+}
+
 
 li {
   cursor: pointer;
@@ -62,15 +70,7 @@ li {
   padding-top:1rem
 }
 
-.list-1.visible {
-  display: block
-}
-
-.list-2.visible {
-  display: block
-}
-
-.list-3.visible {
+.list.visible {
   display: block
 }
 
@@ -80,8 +80,6 @@ li {
     font-size: clamp(0.8rem, 0.75rem + 0.2vw, 0.9rem);
     font-weight: 500;
 }
-
-
 
 .menu.visible {
   flex-direction:column;
@@ -120,17 +118,25 @@ li {
   
 }
 
-.menu-button {
+.menu-button,.header-right button {
   background-color: transparent;
   cursor: pointer;
   display: flex;
   align-items: center;
   color:white;
   font-family: 'comic',sans-serif;
-  font-size: 1.3rem;
   border:none;
   outline:none
 }
+
+.menu-button {
+  font-size: 1.3rem;
+}
+
+
+
+
+
 .menu ul {
   padding-left:1rem;
   display: none;
@@ -160,8 +166,8 @@ li {
   position:fixed;
   left:0;
   top:0;
-  height:3.5rem;
-  background-color: #11312C;
+  height:2.8rem;
+  background-color: #11312c76;
   z-index: 100;
   color:white;
   padding:0 1rem;
@@ -171,14 +177,15 @@ li {
   display: flex;
   justify-content: space-between;
   font-size: 0.9rem;
+
 }
 
 .dropdown {
-  background-color:#11312C;
-  top:3.5rem;
+  background-color:#11312c82;
+  top:2.8rem;
   left:0;
   padding-top:3rem;
-  padding-left:14rem;
+  padding-left:57rem;
   padding-bottom:1.5rem;
   width:100%;
   position:fixed;
@@ -186,8 +193,9 @@ li {
   opacity:0;
   visibility: hidden;
   transition:opacity 0.25s ease,visibility 0.25s ease;
-  
 }
+
+
 
 .dropdown.visible {
  
@@ -212,7 +220,7 @@ ul {
 }
 
 ul li {
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.8rem;
 }
 
 li {
@@ -221,15 +229,18 @@ li {
 
 .header-right {
   display: flex;
-  gap:1rem;
+  gap:1.5rem;
   border: none;
-  font-family:'comic',sans-serif
+  font-family:'comic',sans-serif;
+
 }
 
 .header-right > a {
   cursor: pointer;
 
 }
+
+
 
 
 .ham-button {
@@ -243,12 +254,13 @@ li {
 }
 
 .hero {
-  margin-top: 3.5rem;
+  
   position: relative;
   width: 100%;
   font-family: 'comic', sans-serif;
   container-type: inline-size;   /* lets children use cqw (1cqw = 1% of .hero width) */
-  margin-bottom:1rem
+  margin-bottom:1rem;
+
 }
 
 img {
@@ -432,8 +444,8 @@ img {
 .sub-heading {
   font-family:'comic',sans-serif;
   font-size:var(--sub-heading);
-  margin-bottom:2rem
-  
+  margin-bottom:2rem;
+  scroll-margin-top: 5rem;
 }
 
 .summary-text {
@@ -588,7 +600,7 @@ section {
   --n: 3; /* JS overwrites this with the real image count */
   width: 100%;
   position: relative;
-   margin-bottom: 3rem;
+  margin-bottom: 3rem;
 
 }
 
@@ -757,7 +769,53 @@ section {
   align-self: center;
   padding-left:1rem
 }
+.patric-stewart-page {
+  padding:0 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 
+.patric-stewart-page .text {
+  text-align: center;
+}
+
+.x-hero-img {
+  filter: grayscale(100%);
+}
+
+.patric-stewart-page {
+  padding-top:3.5rem
+}
+
+.spider-man,.spiderman-img-grid ,.wanda ,.wanda-img-grid{
+  display:flex;
+  flex-direction: column;
+  align-items:center
+}
+
+.spiderman-img-grid,.wanda-img-grid {
+  gap:1rem;
+  align-self: stretch;
+
+}
+
+.wanda-img-container {
+  align-self: stretch;
+
+}
+
+.spider-man .text {
+  text-align: center;
+}
+
+.spiderman-img-container,.wanda-img-container {
+  display: block;
+  width: 95%;
+  height: auto;
+  margin: 0 auto;
+  margin-bottom: 1rem;
+}
 
 
 

@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Canvas</title>
+<style>
+  html, body {
+    margin: 0;
+    padding: 0;
+  }
+
+  /* The scrollable surface. Size is set from the CONFIG in the script below. */
+  #canvas {
+    position: relative;
+    background: #fff;
+  }
+
+  /* Positioning only, no visual styling. */
+  #canvas img {
+    position: absolute;
+    display: block;
+  }
+
+  /* Minimap: fixed to the bottom-right corner of the window. */
+  #minimap {
+    position: fixed;
+    right: 16px;
+    bottom: 16px;
+    background: #fff;
+    border: 1px solid #999;
+  }
+
+  #minimap .mini-card {
+    position: absolute;
+    box-sizing: border-box;
+    border: 1px solid #999;
+  }
+
+  /* Lets touch screens drag on the minimap instead of scrolling the page. */
+  #minimap {
+    touch-action: none;
+  }
+
+  /* Images currently on screen are filled grey in the minimap. */
+  #minimap .mini-card.in-view {
+    background: #aaa;
+  }
+
+  /* Green box showing which part of the canvas is currently on screen. */
+  #minimap .viewport-box {
+    position: absolute;
+    box-sizing: border-box;
+    border: 1px solid green;
+    pointer-events: none;
+  }
+</style>
+</head>
+<body>
+
+<div id="canvas"></div>
+<div id="minimap"></div>
+
+<script>
+  // ---- CONFIG ----
+  const CANVAS_WIDTH = 4000;
+  const CANVAS_HEIGHT = 3000;
+
+  const IMAGE_WIDTH = 300;   // display width of every image (height follows aspect ratio)
+  const MARGIN = 50;         // keep images this far from the canvas edges
+  const MIN_GAP = 40;        // minimum space between any two images
+  const SEED = 12345;        // same seed = same layout every load. Change it for a new layout.
+  const FALLBACK_RATIO = 0.75; // height/width used if an image fails to load
+
+  const MINIMAP_WIDTH = 200; // minimap height is derived from the canvas proportions
+  const MINIMAP_SCALE = MINIMAP_WIDTH / CANVAS_WIDTH;
+
+  // Your images. Just edit the paths.
+    const IMAGES = [
+    '../canvas-images/avengers-og.jpg',
+    '../canvas-images/avengers-team-wankanda.jpg',
+    '../canvas-images/black-panther-n-rocket.jpg',
+    '../canvas-images/bucky-holding-arm.jpg',
+    '../canvas-images/bucky-tom-n-sam.jpg',
+    '../canvas-images/chaves-n-strange.jpg',
+    '../canvas-images/deaddpool-elevator.jpg',
+    '../canvas-images/deadpool-at-fireplace.jpg',
+    '../canvas-images/deadpool-bob-ross.jpg',
+    '../canvas-images/drux-n-mantis.jpg'
+  ];
+
+  // ---- STEP 1: Canvas shell ----
+  const canvas = document.getElementById('canvas');
+  canvas.style.width = CANVAS_WIDTH + 'px';
+  canvas.style.height = CANVAS_HEIGHT + 'px';
+
+  // ---- Seeded random (repeatable, not different on every refresh) ----
+  function mulberry32(seed) {
+    return function () {
+      seed |= 0; seed = (seed + 0x6D2B79F5) | 0;
+      let t = Math.imul(seed ^ (seed >>> 15), 1 | seed);
+      t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+      return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+    };
+  }
+
+  // Load an image to learn its proportions (needed to place without overlap).
+  function loadImage(src) {
+    return new Promise((resolve) => {
+      const probe = new Image();
+      probe.onload = () => resolve({ src, ratio: probe.naturalHeight / probe.naturalWidth });
+      probe.onerror = () => resolve({ src, ratio: FALLBACK_RATIO });
+      probe.src = src;
+    });
+  }
+
+  // ---- STEP 2: Random, non-overlapping placement ----
+  function placeAll(items) {
+    const rand = mulberry32(SEED);
+    const placed = [];
+
+    items.forEach((item) => {
+      const w = IMAGE_WIDTH;
+      const h = Math.round(IMAGE_WIDTH * item.ratio);
+      let x = 0, y = 0, ok = false;
+
+      for (let attempt = 0; attempt < 1000 && !ok; attempt++) {
+        x = Math.round(MARGIN + rand() * (CANVAS_WIDTH - 2 * MARGIN - w));
+        y = Math.round(MARGIN + rand() * (CANVAS_HEIGHT - 2 * MARGIN - h));
+        ok = !placed.some((p) =>
+          x < p.x + p.w + MIN_GAP && x + w + MIN_GAP > p.x &&
+          y < p.y + p.h + MIN_GAP && y + h + MIN_GAP > p.y
+        );
+      }
+      if (!ok) console.warn('Could not find a free spot for ' + item.src + ' (canvas too crowded).');
+
+      placed.push({ src: item.src, x, y, w, h });
+    });
+
+    return placed;
+  }
+
+  function renderImages(placed) {
+    placed.forEach((p) => {
+      const img = document.createElement('img');
+      img.src = p.src;
+      img.style.left = p.x + 'px';
+      img.style.top = p.y + 'px';
+      img.style.width = p.w + 'px';
+      img.style.height = p.h + 'px';
+      canvas.appendChild(img);
+    });
+  }
+
+  // ---- STEP 3: Minimap (an outline per image, scaled down) ----
+  function renderMinimap(placed) {
+    const minimap = document.getElementById('minimap');
+    const scale = MINIMAP_SCALE;
+    minimap.style.width = MINIMAP_WIDTH + 'px';
+    minimap.style.height = Math.round(CANVAS_HEIGHT * scale) + 'px';
+
+    // Keep each outline together with its image data so step 5 can highlight it.
+    return placed.map((p) => {
+      const box = document.createElement('div');
+      box.className = 'mini-card';
+      box.style.left = (p.x * scale) + 'px';
+      box.style.top = (p.y * scale) + 'px';
+      box.style.width = (p.w * scale) + 'px';
+      box.style.height = (p.h * scale) + 'px';
+      minimap.appendChild(box);
+      return { el: box, p };
+    });
+  }
+
+  // ---- STEP 4 + 5: Viewport tracking and in-view highlighting ----
+  function trackViewport(minis) {
+    const minimap = document.getElementById('minimap');
+    const box = document.createElement('div');
+    box.className = 'viewport-box';
+    minimap.appendChild(box);
+
+    function update() {
+      const view = document.documentElement;
+      box.style.left = (window.scrollX * MINIMAP_SCALE) + 'px';
+      box.style.top = (window.scrollY * MINIMAP_SCALE) + 'px';
+      box.style.width = (view.clientWidth * MINIMAP_SCALE) + 'px';
+      box.style.height = (view.clientHeight * MINIMAP_SCALE) + 'px';
+
+      // Step 5: grey-fill every image that overlaps the visible area.
+      const left = window.scrollX, top = window.scrollY;
+      const right = left + view.clientWidth, bottom = top + view.clientHeight;
+      minis.forEach(({ el, p }) => {
+        const visible = p.x < right && p.x + p.w > left && p.y < bottom && p.y + p.h > top;
+        el.classList.toggle('in-view', visible);
+      });
+    }
+
+    window.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update);
+    update();
+  }
+
+  // ---- STEP 6: Minimap navigation (click or drag to jump) ----
+  function enableMinimapNavigation() {
+    const minimap = document.getElementById('minimap');
+    let dragging = false;
+
+    // Centre the screen on the spot that was clicked in the minimap.
+    function jumpTo(e) {
+      const rect = minimap.getBoundingClientRect();
+      const view = document.documentElement;
+      const x = (e.clientX - rect.left - minimap.clientLeft) / MINIMAP_SCALE;
+      const y = (e.clientY - rect.top - minimap.clientTop) / MINIMAP_SCALE;
+      window.scrollTo(x - view.clientWidth / 2, y - view.clientHeight / 2);
+    }
+
+    minimap.addEventListener('pointerdown', (e) => {
+      dragging = true;
+      minimap.setPointerCapture(e.pointerId); // keep tracking even if the pointer leaves the minimap
+      jumpTo(e);
+      e.preventDefault();
+    });
+    minimap.addEventListener('pointermove', (e) => {
+      if (dragging) jumpTo(e);
+    });
+    minimap.addEventListener('pointerup', () => { dragging = false; });
+    minimap.addEventListener('pointercancel', () => { dragging = false; });
+  }
+
+  // ---- Run ----
+  Promise.all(IMAGES.map(loadImage)).then((items) => {
+    const placed = placeAll(items);
+    renderImages(placed);
+    const minis = renderMinimap(placed);
+    trackViewport(minis);
+    enableMinimapNavigation();
+  });
+</script>
+
+</body>
+</html>

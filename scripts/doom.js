@@ -4,8 +4,6 @@ const minute = document.querySelector('.minute');
 const second = document.querySelector('.second');
 const menu = document.querySelector('.menu');
 const closeButton = document.querySelector('.close-button');
-const dropdown = document.querySelector('.dropdown');
-const categories = document.querySelectorAll('.category');
 
 
 const targetDate = new Date ('December 18, 2026 00:00:00').getTime();
@@ -35,13 +33,7 @@ function time () {
  time();
 //  setInterval(time,1000);
 
- const hamButton = document.querySelector('.ham-button');
- const headerRight = document.querySelector('header-right');
 
- 
- hamButton.addEventListener('click',() => {
-  menu.classList.add('visible')
- })
 
 document.querySelectorAll('.video[data-id]').forEach(box => {
   box.addEventListener('click', () => loadVideo(box), { once: true });
@@ -50,38 +42,6 @@ document.querySelectorAll('.video[data-id]').forEach(box => {
 closeButton.addEventListener('click', () => {
   menu.classList.remove('visible');
 })
-
-dropdown.addEventListener('mouseleave', () => {
-  dropdown.classList.remove('visible')
-})
-
-categories.forEach(category => {
-  handleEnter(category);
-  
-})
-
-function handleEnter (category) {
-  category.addEventListener('mouseenter', () => {
-    const name = category.dataset.category;
-    const panel = document.querySelector(`[data-panel="${name}"]`);
-    panel.classList.add('active')
-    document.querySelectorAll('.panel').forEach(p => {
-      p.classList.remove('active')
-    })
-    panel.classList.add('active')
-    dropdown.classList.add('visible')
-  });
-}
-
-// function handleLeave (category) {
-//   category.addEventListener('mouseleave', () => {
-//     const name = category.dataset.category;
-//     const panel = document.querySelector(`[data-panel="${name}"]`);
-//     panel.classList.remove('active')
-//     console.log('left');
-    
-//   });
-// }
 
 function loadVideo(el) {
   if (el.querySelector('iframe')) return;
@@ -291,14 +251,15 @@ window.addEventListener('resize', () => {
 })();
 
 
-const primerButton = document.querySelector('.primer-btn');
-const playButton = document.querySelector('.play-btn');
-const theatersButton = document.querySelector('.theaters-btn');
-const creatorButton = document.querySelector('.creator-btn');
+const menuPrimerButton = document.querySelector('.menu-primer-btn');
+const menuMemoriamButton = document.querySelector('.menu-memoriam-btn');
+const menuTheatersButton = document.querySelector('.menu-theaters-btn');
+const menuCreatorButton = document.querySelector('.menu-creator-btn');
 
 const firstList = document.querySelector ('.list-1');
 const secondList = document.querySelector ('.list-2');
 const thirdList = document.querySelector ('.list-3');
+const fourthList = document.querySelector ('.list-4');
 
 const lists = document.querySelectorAll ('.list');
 
@@ -311,20 +272,26 @@ function listToggle () {
 
 }
 
-
-
-primerButton.addEventListener ('click',() => {
+menuPrimerButton.addEventListener ('click',() => {
   listToggle();
   firstList.classList.add('visible');
 })
 
-theatersButton.addEventListener ('click',() => {
+menuMemoriamButton.addEventListener ('click',() => {
   listToggle();
   secondList.classList.add('visible');
 })
 
-
-creatorButton.addEventListener ('click',() => {
+menuTheatersButton.addEventListener ('click',() => {
   listToggle();
   thirdList.classList.add('visible');
 })
+
+
+menuCreatorButton.addEventListener ('click',() => {
+  listToggle();
+  fourthList.classList.add('visible');
+})
+
+
+

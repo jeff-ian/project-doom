@@ -910,13 +910,7 @@ section {
 
 
 
-.steve-header-img-container img ,
-.loki-tessaract-image-container img ,
-.tva-n-loki-image-container img ,
-.tva-image-contaner img,
-.sacred-timeline-image-container img,
-.spiderman-img-container img,
-.wanda-img-container img
+.ratio-img
 { 
     width:100%;
     aspect-ratio: 5/3;

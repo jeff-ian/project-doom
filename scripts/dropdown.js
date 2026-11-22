@@ -1,3 +1,5 @@
+import { getMenuLinks } from "./doom.js";
+
 (() => {
   const dropdown = document.querySelector('.dropdown');
   const categories = document.querySelectorAll('.category');
